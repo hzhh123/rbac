@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.model.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="_order" jdbcType="VARCHAR" property="order" />
+    <result column="isHeader" jdbcType="VARCHAR" property="isheader" />
+    <result column="statue" jdbcType="VARCHAR" property="statue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, url, icon, parentId, _order, isHeader, statue
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findByRoleid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    m.id,m.name,m.url,m.icon,m.parentId,m._order,m.isHeader,m.statue 
+    from menu m,role_menu rm 
+    where rm.roleid = #{param1} and rm.menuid=m.id
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.model.Menu">
+    insert into menu (id, name, url, 
+      icon, parentId, _order, 
+      isHeader, statue)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, #{order,jdbcType=VARCHAR}, 
+      #{isheader,jdbcType=VARCHAR}, #{statue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.model.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="order != null">
+        _order,
+      </if>
+      <if test="isheader != null">
+        isHeader,
+      </if>
+      <if test="statue != null">
+        statue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        #{order,jdbcType=VARCHAR},
+      </if>
+      <if test="isheader != null">
+        #{isheader,jdbcType=VARCHAR},
+      </if>
+      <if test="statue != null">
+        #{statue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.model.Menu">
+    update menu
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        _order = #{order,jdbcType=VARCHAR},
+      </if>
+      <if test="isheader != null">
+        isHeader = #{isheader,jdbcType=VARCHAR},
+      </if>
+      <if test="statue != null">
+        statue = #{statue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.model.Menu">
+    update menu
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      _order = #{order,jdbcType=VARCHAR},
+      isHeader = #{isheader,jdbcType=VARCHAR},
+      statue = #{statue,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+</update>
+  <select id="findAll" resultMap="BaseResultMap">
+     SELECT * FROM menu
+  </select>
+</mapper>
