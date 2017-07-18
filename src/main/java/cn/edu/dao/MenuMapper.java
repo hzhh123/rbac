@@ -18,4 +18,5 @@ public interface MenuMapper {
     int updateByPrimaryKey(Menu record);
     List<Menu>findByRoleid(Integer roleid);
     List<Menu>findAll();
+    List<Menu>findParentMenu();
 }

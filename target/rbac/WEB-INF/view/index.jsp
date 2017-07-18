@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Title</title>
+    <link rel="shortcut icon" href="assets/admin/image/favicon.ico">
     <link rel="stylesheet" href="assets/admin/plugin/bootstrapV3/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/admin/plugin/font/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/font/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/admin/plugin/metisMenu/css/metisMenu.css">
     <link rel="stylesheet" href="assets/admin/plugin/metisMenu/css/mm-vertical.css">
     <link rel="stylesheet" href="assets/admin/css/style.css">
@@ -33,8 +35,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="navbar-nav nav">
-                <li><a href="" class="toggle-sidebar"><i class="fa fa-tasks"></i></a></li>
-                <li><a href="">123</a></li>
+                <li><a href="" class="toggle-sidebar task"><i class="fa fa-tasks"></i></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Link</a></li>

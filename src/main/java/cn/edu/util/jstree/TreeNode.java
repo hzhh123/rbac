@@ -12,10 +12,9 @@ public class TreeNode {
     private String parent;
     private String text;
     private String icon;
-    private Map<String,Object>statue=new HashMap<String,Object>();
+    private Map<String,Object>state=new HashMap<String,Object>();
     private Map<String,Object>li_attr=new HashMap<String,Object>();
     private Map<String,Object> a_attr=new HashMap<String,Object>();
-    private List<TreeNode> children;
 
     public String getId() {
         return id;
@@ -49,12 +48,12 @@ public class TreeNode {
         this.icon = icon;
     }
 
-    public Map<String, Object> getStatue() {
-        return statue;
+    public Map<String, Object> getState() {
+        return state;
     }
 
-    public void setStatue(Map<String, Object> statue) {
-        this.statue = statue;
+    public void setState(Map<String, Object> state) {
+        this.state = state;
     }
 
     public Map<String, Object> getLi_attr() {
@@ -73,11 +72,4 @@ public class TreeNode {
         this.a_attr = a_attr;
     }
 
-    public List<TreeNode> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<TreeNode> children) {
-        this.children = children;
-    }
 }

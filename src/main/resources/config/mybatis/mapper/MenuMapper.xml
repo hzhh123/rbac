@@ -26,6 +26,9 @@
     from menu m,role_menu rm 
     where rm.roleid = #{param1} and rm.menuid=m.id
   </select>
+  <select id="findParentMenu" resultMap="BaseResultMap">
+    SELECT *FROM menu WHERE url=''||url=NULL
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from menu
     where id = #{id,jdbcType=INTEGER}

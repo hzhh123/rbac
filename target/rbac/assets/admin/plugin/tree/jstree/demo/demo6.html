@@ -3,23 +3,96 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-   <link href="../themes/default/style2.css" rel="stylesheet"> 
-   
-    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet"> 
+    <link href="../themes/default/style2.css" rel="stylesheet">
+
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 <body>
- <!-- <div style="border :1px solid rgb(185,185,185);border-radius: 3px;width:13px;height:13px">
-    <div style="background-color: #ffd2d2;width:9px;height:9px;margin: 2px;"></div>
- </div>  -->
+<!-- <div style="border :1px solid rgb(185,185,185);border-radius: 3px;width:13px;height:13px">
+   <div style="background-color: #ffd2d2;width:9px;height:9px;margin: 2px;"></div>
+</div>  -->
 <div id="data" class="demo"></div>
-<script type="text/javascript" src="../jquery-3.1.1.min.js"></script> 
+<script type="text/javascript" src="../jquery-3.1.1.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script> -->
 <script type="text/javascript" src="../jstree1.js"></script>
 <script type="text/javascript">
     $(function () {
         $('#data').jstree({
-             'core' : {
-                 'data':[{"id":1,"parent":"#","text":"主菜单","icon":"","statue":{"opened":true,"selected":true},"li_attr":{},"a_attr":{"url":""}}]},
-            plugins: ["checkbox","contextmenu","wholerow" ]
+            'core': {
+                'data': [{
+                    "id": "1",
+                    "parent": "#",
+                    "text": "主菜单",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }, {
+                    "id": "2",
+                    "parent": "1",
+                    "text": "权限管理系统",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }, {
+                    "id": "3",
+                    "parent": "2",
+                    "text": "用户管理",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": "/user"}
+                }, {
+                    "id": "4",
+                    "parent": "2",
+                    "text": "角色管理",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": "/role"}
+                }, {
+                    "id": "5",
+                    "parent": "2",
+                    "text": "菜单管理",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": "/menu/menu"}
+                }, {
+                    "id": "6",
+                    "parent": "#",
+                    "text": "个人",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }, {
+                    "id": "7",
+                    "parent": "6",
+                    "text": "测试1",
+                    "icon": "",
+                    "state": {"opened": true, "selected": true},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }, {
+                    "id": "8",
+                    "parent": "#",
+                    "text": "组织",
+                    "icon": "",
+                    "state": {"opened": false, "selected": false},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }, {
+                    "id": "9",
+                    "parent": "8",
+                    "text": "测试2",
+                    "icon": "",
+                    "state": {"opened": false, "selected": false},
+                    "li_attr": {},
+                    "a_attr": {"url": ""}
+                }]
+            },
+            plugins: ["dnd","checkbox", "contextmenu", "wholerow"]
         });
     });
 </script>

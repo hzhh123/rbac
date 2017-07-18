@@ -27,4 +27,7 @@ public class Source {
         this.value = value;
         this.text = text;
     }
+
+    public Source() {
+    }
 }

@@ -16,7 +16,7 @@
 <div class="container-fluid">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <div class="panel-title"><h4><i class="fa fa-search"></i> 查询</h4></div>
+           <h4 class="panel-title"><i class="fa fa-search"></i> 查询</h4>
         </div>
         <div class="panel-body">
             <form id="search-form" method="POST" class="form-inline" role="form">
@@ -269,8 +269,8 @@
                         field: '',
                         title: '操作',
                         formatter: function (value, row, index) {
-                            return "<div class='btn-group'><a class=\"btn btn-warning btn-sm\" title=\"修改\" onclick='update(" + row.id + ")'><i class=\"fa fa-edit\"></i></a>"
-                                + "<a class=\"btn btn-danger btn-sm\" title=\"删除\" onclick='del(" + row.id + ")'><i class=\"fa fa-trash-o\"></i></a><a class=\"btn btn-info btn-sm\" title=\"关联角色\" " +
+                            return "<div class='btn-group'><a class=\"btn btn-warning btn-xs\" title=\"修改\" onclick='update(" + row.id + ")'><i class=\"fa fa-edit\"></i></a>"
+                                + "<a class=\"btn btn-danger btn-xs\" title=\"删除\" onclick='del(" + row.id + ")'><i class=\"fa fa-trash-o\"></i></a><a class=\"btn btn-info btn-xs\" title=\"关联角色\" " +
                                 "href='/user/association?id=" + row.id + "'><i class=\"fa fa-user\"></i></a></div>"
                         }
                     }
@@ -285,6 +285,17 @@
                             title: '用户名',
                             validate: function (v) {
                                 if (!v) return '用户名不能为空';
+
+                            }
+                        }
+                    },{
+                        field: 'password',
+                        title: '密码',
+                        editable: {
+                            type: 'text',
+                            title: '密码',
+                            validate: function (v) {
+                                if (!v) return '密码不能为空';
 
                             }
                         }

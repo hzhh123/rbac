@@ -2,13 +2,11 @@ package cn.edu.controller;
 
 import cn.edu.model.Menu;
 import cn.edu.model.Role;
-import cn.edu.model.User;
+import cn.edu.model.RoleMenu;
 import cn.edu.service.MenuService;
+import cn.edu.service.RoleMenuService;
 import cn.edu.service.RoleService;
-import cn.edu.service.UserRoleService;
-import cn.edu.util.Const;
 import cn.edu.util.StringUtil;
-import cn.edu.util.jstree.JstreeNodeUtil;
 import cn.edu.util.jstree.TreeNode;
 import cn.edu.util.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +26,7 @@ public class RoleController {
     @Autowired
 	private RoleService roleService;
 	@Autowired
-    private UserRoleService userRoleService;
+    private RoleMenuService roleMenuService;
 	@Autowired
 	private MenuService menuService;
 	@RequestMapping
@@ -115,16 +112,14 @@ public class RoleController {
 	}
 	@ResponseBody
 	@RequestMapping("ajax_nodes")
-	public List<TreeNode>jstreeMenu(HttpServletRequest request){
-		User user=(User)request.getSession().getAttribute(Const.SESSION_USER);
-		Integer[] _roleids=userRoleService.getRoleids(user.getId());
-		List<Menu>mList=menuService.findByRoleids(_roleids);
+	public List<TreeNode>jstreeMenu(Integer roleid){
+		List<Menu>mList=menuService.findByRoleid(roleid);
 		List<Menu>menus=menuService.findAll();
 		List<TreeNode>nodes=new ArrayList<TreeNode>();
 		for (int i = 0; i < menus.size(); i++) {
 			TreeNode node=new TreeNode();
 			node.setId(menus.get(i).getId().toString());
-			node.setParent(menus.get(i).getParentid().toString()==null?"#":menus.get(i).getParentid().toString());
+			node.setParent(menus.get(i).getParentid()==null||menus.get(i).getParentid()==0?"#":menus.get(i).getParentid().toString());
 			node.setIcon(menus.get(i).getIcon()==null?"":menus.get(i).getIcon());
 			node.setText(menus.get(i).getName()==null?"":menus.get(i).getName());
 			Map<String,Object>map=new HashMap<String,Object>();
@@ -141,9 +136,29 @@ public class RoleController {
 			}
 			map1.put("opened",opened);
 			map1.put("selected",selected);
-			node.setStatue(map1);
+			node.setState(map1);
 			nodes.add(node);
 		}
-		return JstreeNodeUtil.tree(nodes,"0");
+		return nodes;
+	}
+	@ResponseBody
+	@RequestMapping("association")
+	public String association(Integer roleid,@RequestParam("ids[]")String ids){
+		try{
+			roleMenuService.delete(roleid);
+			if(!ids.equals("")) {
+				Integer[] _ids = StringUtil.parse(ids);
+				for (Integer menuid : _ids) {
+					RoleMenu rm = new RoleMenu();
+					rm.setRoleid(roleid);
+					rm.setMenuid(menuid);
+					roleMenuService.insert(rm);
+				}
+			}
+			return "1";
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "0";
 	}
 }

@@ -6,6 +6,7 @@
             overflow: auto;
             background: #212529;
             margin-top: 50px;
+            height: calc(100% - 50px);
         }
         .navbar-brand{
             width:220px;
@@ -28,8 +29,8 @@
         }
         @media(max-width: 768px) {
           .toggle-sidebar{
-              display: none;
-          }
+                display: none!important;
+            }
             aside{
                 position: absolute;
                 top:0px;

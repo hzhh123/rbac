@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Title</title>
-    <link rel="stylesheet" href="assets/admin/plugin/bootstrapV3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/admin/plugin/font/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/admin/plugin/bootstrap-dialog/css/bootstrap-dialog.css">
-    <link rel="stylesheet" href="assets/admin/plugin/tree/jstree/themes/default/style.css">
-    <link rel="stylesheet" href="assets/admin/plugin/bootstrap-table/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/bootstrapV3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/font/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-dialog/css/bootstrap-dialog.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/tree/jstree/themes/default/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/bootstrap-table.min.css">
     <style type="text/css">
         #data .fa-folder{
             color:#337ab7;
@@ -22,7 +22,7 @@
 <div class="container-fluid">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <div class="panel-title"><h4><i class="fa fa-search"></i> 查询</h4></div>
+            <h4 class="panel-title"><i class="fa fa-search"></i> 查询</h4>
         </div>
         <div class="panel-body">
             <form id="search-form" method="POST" class="form-inline" role="form">
@@ -54,17 +54,17 @@
     <input type="hidden" id="index">
 </div>
 <%--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>--%>
-<script type="text/javascript" src="assets/admin/plugin/jquery.min.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrapV3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-dialog/js/bootstrap-dialog.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/bootstrap-table.min.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/bootstrap-table-editable.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/bootstrap-editable.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/bootstrap-table-resizable.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/colresizable.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/export/bootstrap-table-export.js"></script>
-<script type="text/javascript" src="assets/admin/plugin/bootstrap-table/dist/export/tableExport.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrapV3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-dialog/js/bootstrap-dialog.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/bootstrap-table-editable.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/bootstrap-editable.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/bootstrap-table-resizable.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/colresizable.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/export/bootstrap-table-export.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/bootstrap-table/dist/export/tableExport.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/js/serializeObject.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/admin/plugin/tree/jstree/jstree.js"></script>
 <script type="text/javascript">
@@ -171,58 +171,61 @@
 
     function association(id) {
         BootstrapDialog.show({
-            title: '<i class="fa fa-edit"></i> 关联资源',
+            title: '<i class="fa fa-share-alt"></i> 关联资源',
             message: $('<div style="padding: 15px;"></div>').load('common/associationOption.html'),
             onshown:function (dialogRef) {
                 $('#data').data('jstree', false).empty();
                 $('#data').jstree({
                     'core' : {
-                        'data' : {
-                            'url': '/role/ajax_nodes',  //异步加载jstree html格式的数据地址
-                            'data': function (node) {
-                                return { 'id': node.id };
-                            }
+                        'data' : function (obj, cb) {
+                            $.ajax({
+                                url:'/role/ajax_nodes',
+                                dataType:'json',
+                                data:{"roleid":id},
+                                type:'post',
+                                success:function (data) {
+                                    cb.call(this, data);
+                                }
+                            });
+
+                        }
+
+                    },
+                    "types" : {
+                        "default" : {
+                            "icon" : "fa fa-folder"
                         }
                     },
-                    plugins: ["checkbox","wholerow"]
-                }).bind('select_node.jstree', function (event, data) {  //绑定的点击事件
-                    alert(data.node.data.id);
+                    plugins: ["types","checkbox","wholerow"]
                 });
             },
             buttons: [{
                 label: '确定',
                 cssClass:'btn-primary',
                 action: function(dialog) {
-                    $.ajax({
-                        url:'/role/saveOrUpdate',
-                        data:$('#form').serializeObject(),
-                        dataType:'json',
-                        type:'post',
-                        success:function(data){
-                            if(data.msg=="1"){
-                                alert("修改成功！");
-                                var rolename=$('#form').find('[name=rolename]').val();
-                                var desc=$('#form').find('[name=desc]').val();
-                                var statue=$('#form').find('[name=statue]:checked').val();
-                                console.log(statue);
-                                //var row=$('#table1').bootstrapTable('getRowByUniqueId',id);
-                                $('#table1').bootstrapTable('updateRow', {
-                                    index: $('#index').val(),
-                                    row: {
-                                        rolename: rolename,
-                                        statue:statue,
-                                        desc:desc
-                                    }
-                                });
-
-                            }else if(data.msg=="0"){
-                                alert("用户名已存在");
-                            } else{
-                                alert("出错了!")
-                            }
-                            dialog.close();
-                        }
-                    });
+                    var ids=new Array();
+                    var ref = $('#data').jstree(true),
+                        nodes = ref.get_selected();
+                    if(nodes==""){
+                        ids.push("");
+                    }else {
+                        ids=nodes;
+                    }
+                   $.ajax({
+                       url:'role/association',
+                       data:{"roleid":id,"ids":ids},
+                       dataType:"json",
+                       type:'post',
+                       success:function (data) {
+                           if(data=="1"){
+                               alert("成功");
+                           }
+                       },
+                       error:function (xhr,status,error) {
+                           alert(error);
+                       }
+                   })
+                    dialog.close();
                 }
             }, {
                 label: '关闭',
@@ -297,9 +300,9 @@
                         field: '',
                         title: '操作',
                         formatter: function (value, row, index) {
-                            return "<div class='btn-group'><a class=\"btn btn-warning btn-sm\" title=\"修改\" onclick='update(" + row.id + ")'><i class=\"fa fa-edit\"></i></a>"
-                                + "<a class=\"btn btn-danger btn-sm\" title=\"删除\" onclick='del(" + row.id + ")'><i class=\"fa fa-trash-o\"></i></a><a class=\"btn btn-info btn-sm\" title=\"关联资源\" " +
-                                "onclick='association(" + row.id + ")'><i class=\"fa fa-user\"></i></a></div>"
+                            return "<div class='btn-group'><a class=\"btn btn-warning btn-xs\" title=\"修改\" onclick='update(" + row.id + ")'><i class=\"fa fa-edit\"></i></a>"
+                                + "<a class=\"btn btn-danger btn-xs\" title=\"删除\" onclick='del(" + row.id + ")'><i class=\"fa fa-trash-o\"></i></a><a class=\"btn btn-info btn-xs\" title=\"关联资源\" " +
+                                "onclick='association(" + row.id + ")'><i class=\"fa fa-share-alt\"></i></a></div>"
                         }
                     }
                     , {
@@ -380,7 +383,7 @@
                                     dataType: 'json',
                                     type: 'post',
                                     success: function (data) {
-                                        if (data == 1) {
+                                        if (data == "1") {
                                             alert("删除成功！")
                                             $('#table1').bootstrapTable('remove', {field: 'id', values: ids});
                                         } else {
