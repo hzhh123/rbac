@@ -7,6 +7,7 @@ $(".metismenu").on('click', 'li a', function(e) {
     e.preventDefault();
     var $this = $(this);
     if($this.attr('href')!=''&&$this.attr('href')!='#'&&$this.attr('href')!='javascript;'&&$this.attr('href')!='javascript:void(0)'&&$this.attr('href')!=null){
+        layer.msg($(this).text());
         addIframe($this);
     }
 });

@@ -70,7 +70,7 @@
         <table schema="db_rbac" tableName="menu" domainObjectName="Menu"
                enableInsert="true" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
                 -->
-         <table schema="db_rbac" tableName="article" domainObjectName="Article"
+         <table schema="db_rbac" tableName="bootstrapiconinfo" domainObjectName="BootstrapIconInfo"
                enableInsert="true" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
               
             <!-- 忽略字段 可选的（0 or 1） -->
